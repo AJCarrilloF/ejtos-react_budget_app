@@ -14,34 +14,36 @@ const Budget = () => {
         });
         
     }
-
-    const { budget } = useContext(AppContext);
+    const {currency} = useContext(AppContext);
+    //const { budget } = useContext(AppContext);
     const { remaining } = useContext(AppContext);
     const [newBudget, setNewBudget] = useState('');
     //const [budgetToadd, setBudget] = useState('');
     const handleBudgetChange = (event) => {
         
         
-        
+        //alert((event.target.value-remaining));
         if(remaining < 0){
             alert("You cannot reduce the budget value lower than the spending")
+            
             event.target.value = maxBudget
         }
        
         if (event.target.value > maxBudget){
-            alert("Budget exceeds.")
+            alert("Budget cannot exceed "+currency+"20000.")
             event.target.value = maxBudget
         }
         //alert("Current budget: "+event.target.value); 
         
-        setNewBudget(event.target.value);
+        
         setBudget(event.target.value);
+        setNewBudget(event.target.value);
     };
     
     return (
 <div className='alert alert-secondary'>
-<span>Budget: </span>
-<input type="number" step="10" max={maxBudget} value={newBudget} onChange={handleBudgetChange}></input>
+<span>Budget: {currency}</span>
+<input  type="number" data-type='currency' step="10" min={0} max={maxBudget} value={newBudget} onChange={handleBudgetChange }></input>
 </div>
     );
 };
